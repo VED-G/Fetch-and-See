@@ -1,4 +1,9 @@
-# ─── Python ───────────────────────────────────────────────────────────────────
+# Private — local trackers, not part of the repo
+PROGRESS.md
+INTERVIEW.md
+
+# Python
+
 __pycache__/
 *.py[cod]
 *$py.class
