@@ -1,23 +1,9 @@
 """
-DocMind — Structured Logging
-==============================
-Uses structlog for JSON-formatted, structured logs with automatic request ID
-injection.  Every log entry in production looks like:
+Structured logging using structlog.
 
-    {
-        "event": "query.completed",
-        "request_id": "req-8f3a1b",
-        "duration_ms": 423,
-        "provider": "groq",
-        "confidence": 0.72,
-        "timestamp": "2024-11-01T10:23:45.123456Z",
-        "level": "info"
-    }
-
-Interview talking point:
-  "Structured logs are machine-parseable — you can pipe them to Elasticsearch,
-   Loki, or CloudWatch and query for 'all requests where duration_ms > 2000'
-   in seconds.  Plain text logs require expensive regex parsing."
+Dev mode: pretty-printed coloured console output.
+Production: JSON output parseable by Loki, Elasticsearch, or CloudWatch.
+All log entries include a request_id via contextvars.
 """
 
 from __future__ import annotations

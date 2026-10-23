@@ -1,25 +1,9 @@
 """
-DocMind — Citation-Aware Prompt Builder
-=========================================
-Builds the system + user message pair sent to the LLM.
+Citation-aware prompt builder.
 
-Citation injection format:
-  Each retrieved chunk is wrapped in [SOURCE N] tags with its filename and
-  page number.  The system prompt instructs the LLM to cite inline using [N].
-  Post-processing maps [1], [2], etc. to the actual Citation objects.
-
-"I Don't Know" system prompt:
-  The system prompt explicitly forbids the LLM from using knowledge outside
-  the provided sources.  Combined with the confidence threshold gate (no LLM
-  call if score is too low), this is a two-layer hallucination defence:
-    Layer 1: Don't call the LLM if retrieved context is irrelevant (threshold gate)
-    Layer 2: Tell the LLM to say "I don't know" if context doesn't support an answer
-
-Interview talking point:
-  "Prompt engineering for RAG is about constraint, not creativity.  The goal
-   is to make the LLM a faithful reader, not a creative writer.  Low temperature
-   (0.1), explicit 'only use sources', and citation requirements all push
-   the model toward grounded, conservative answers."
+Wraps retrieved chunks in [SOURCE N] tags and instructs the LLM to cite
+inline as [1], [2], etc. The system prompt forbids using external knowledge,
+providing a second layer of hallucination defence after the confidence gate.
 """
 
 from __future__ import annotations

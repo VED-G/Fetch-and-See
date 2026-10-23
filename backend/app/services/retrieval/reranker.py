@@ -1,32 +1,9 @@
 """
-DocMind — Cross-Encoder Reranker
-==================================
-Uses BAAI/bge-reranker-v2-m3 to score (query, chunk) pairs jointly.
+Cross-encoder reranker using BAAI/bge-reranker-v2-m3.
 
-Why cross-encoder over bi-encoder for reranking?
-  Bi-encoder (used in vector search): encodes query and document SEPARATELY,
-  then compares with cosine similarity.  Fast but can't model interactions
-  between query and document terms.
-
-  Cross-encoder: processes (query + document) TOGETHER as one input through
-  the full transformer attention mechanism.  Much more accurate because the
-  model can attend to both simultaneously — but O(n) inference cost per
-  document, so only feasible for small candidate sets (top-30 from RRF).
-
-Resource usage:
-  bge-reranker-v2-m3 (~278M params) ≈ 550 MB RAM on CPU.
-  Scoring 30 pairs takes ~200-500ms on a laptop CPU, which is acceptable
-  since it runs only once per query.
-
-When ENABLE_RERANKER=false:
-  The reranker is skipped entirely.  The pipeline uses RRF-fused results
-  directly, just taking the top-5 by RRF score.  Quality is slightly lower
-  but performance is much better on constrained hardware.
-
-Interview talking point:
-  "The cross-encoder solves the 'lost in the middle' problem — documents
-   ranked 15th by vector search but actually most relevant get promoted.
-   I made it optional so the system degrades gracefully on low-RAM machines."
+Scores (query, chunk) pairs jointly for higher accuracy than bi-encoder search.
+Only runs on the top candidates from RRF (not the full corpus) due to O(n) cost.
+Set ENABLE_RERANKER=false to skip on low-RAM machines.
 """
 
 from __future__ import annotations

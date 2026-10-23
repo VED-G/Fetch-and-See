@@ -1,24 +1,9 @@
 """
-DocMind — Embedding Service
-=============================
-Wraps sentence-transformers to produce dense vectors for both documents
-(at ingestion time) and queries (at query time).
+Embedding service wrapping sentence-transformers.
 
-Model default: paraphrase-multilingual-MiniLM-L12-v2
-  - 118M parameters, ~450 MB RAM on CPU
-  - 384-dimensional output vectors
-  - Supports 50+ languages including Hindi and English
-  - Fast: ~300 sentences/sec on a modern CPU
-
-Upgrade path (set EMBEDDING_MODEL env var):
-  - BAAI/bge-m3 → 1024-dim, 100+ langs, 8k context, dense+sparse from one model
-    (needs ~1.5 GB RAM)
-
-Interview talking point:
-  "I separated the embedder into a singleton loaded at startup (warm_up) and
-   reused across requests.  Loading a 118M-parameter model takes ~2 seconds;
-   doing that per-request would add 2s to every query.  The warm_up() call
-   in the FastAPI lifespan ensures the model is hot before the first request."
+Default model: paraphrase-multilingual-MiniLM-L12-v2 (~450 MB RAM, 384-dim).
+All encode calls run in a threadpool so they don't block the event loop.
+Upgrade path: set EMBEDDING_MODEL=BAAI/bge-m3 for 1024-dim multilingual vectors.
 """
 
 from __future__ import annotations

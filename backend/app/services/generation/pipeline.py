@@ -1,23 +1,8 @@
 """
-DocMind — Full Query Pipeline
-================================
-Orchestrates: cache check → query rewrite → hybrid search → rerank → generate.
+Full RAG query pipeline as an async SSE generator.
 
-This is the hot path — every user question flows through here.
-It implements the full retrieval-augmented generation cycle with:
-  - Two-level confidence gating (no-answer vs low-confidence)
-  - Streaming SSE output
-  - Latency breakdown per stage
-  - Semantic cache integration
-
-Streaming architecture:
-  The query endpoint returns a Server-Sent Events (SSE) stream.
-  As the LLM generates tokens, we yield them immediately as SSE events.
-  Each SSE event has a type:
-    "token"     — a single LLM output token
-    "citations" — final citation list (sent after generation completes)
-    "meta"      — latency breakdown, confidence, cache_hit flag
-    "error"     — error message if something failed mid-stream
+Stages: cache check -> query rewrite -> hybrid search -> rerank -> generate.
+Yields SSE events: {type: token}, {type: citations}, {type: meta}, {type: error}.
 """
 
 from __future__ import annotations

@@ -1,14 +1,8 @@
 """
-DocMind — Abstract LLM Provider Protocol
-==========================================
-All LLM providers implement this interface.
-Switching from Groq to Ollama to OpenAI is one env var change.
+LLM provider Protocol and factory.
 
-Interview talking point:
-  "I used Python's Protocol (structural subtyping) instead of ABC because
-   Protocol doesn't require explicit inheritance — any object with the right
-   methods satisfies it.  This means I can mock the provider in tests with
-   a plain class, no inheritance boilerplate."
+All providers implement complete() and stream(). Switch providers via the
+LLM_PROVIDER env var (groq | ollama | openai) without changing pipeline code.
 """
 
 from __future__ import annotations

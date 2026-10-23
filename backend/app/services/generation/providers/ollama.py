@@ -1,12 +1,8 @@
 """
-DocMind — Ollama LLM Provider (Local Fallback)
-================================================
-Connects to a locally-running Ollama server via its HTTP API.
-Ollama is the easiest way to run quantised LLMs on a laptop —
-  `ollama pull llama3.1:8b` downloads and runs the model.
+Ollama LLM provider (local fallback).
 
-This provider is the fallback — set LLM_PROVIDER=ollama in .env if
-you want local inference (requires Ollama installed + enough RAM).
+Connects to a locally running Ollama server. Set LLM_PROVIDER=ollama in .env.
+Requires Ollama installed and running: https://ollama.ai
 """
 
 from __future__ import annotations

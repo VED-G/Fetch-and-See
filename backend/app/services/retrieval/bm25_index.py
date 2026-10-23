@@ -1,31 +1,8 @@
 """
-DocMind — BM25 Sparse Retrieval Index
-========================================
-Wraps the rank-bm25 library for keyword-based (sparse) retrieval.
-BM25 is the gold standard for exact-match search — it catches things like
-error codes, product names, and proper nouns that vector search misses.
+In-memory BM25 keyword retrieval index using rank-bm25.
 
-How BM25 works (interview version):
-  BM25 scores documents by term frequency (TF) and inverse document frequency
-  (IDF), with saturation to prevent single-term spam from dominating.
-  Formula: sum over query terms of  IDF(t) * (tf * (k1+1)) / (tf + k1*(1-b+b*dl/avgdl))
-  where k1 controls term frequency saturation (~1.5) and b controls document
-  length normalisation (~0.75).
-
-Why both BM25 AND dense vectors?
-  Dense vectors: "cardiac arrest" matches "heart attack" ✓, "ERR-4092" → misses ✗
-  BM25:          "cardiac arrest" misses "heart attack" ✗, "ERR-4092" → finds it ✓
-  Hybrid (both): best of both worlds, fused via RRF.
-
-Persistence:
-  The BM25 index is rebuilt from the SQLite chunk table on startup.
-  This is fast (pure Python, seconds for thousands of chunks) and avoids
-  storing a separate serialised file.
-
-Interview talking point:
-  "I chose rank-bm25 over Elasticsearch for a laptop-scale project because
-   it's pure Python, zero infrastructure, and rebuilds from the DB in seconds.
-   At scale I'd swap in OpenSearch or Qdrant's built-in sparse vectors."
+Complements vector search for exact-match queries (error codes, proper nouns).
+Rebuilt from the DB on startup; updated incrementally after each ingestion.
 """
 
 from __future__ import annotations
@@ -43,18 +20,10 @@ settings = get_settings()
 
 
 def _tokenize(text: str) -> list[str]:
-    """Simple multilingual tokeniser.
+    """Multilingual tokeniser: NFKC normalise, lowercase, split on punctuation.
 
-    Steps:
-    1. Unicode NFKC normalisation (handles full-width chars, ligatures)
-    2. Lowercase
-    3. Split on whitespace and punctuation
-    4. Filter tokens shorter than 2 chars
-
-    Works for Hindi (Devanagari) because Unicode normalisation preserves
-    the script, and BM25 treats each Unicode word as a token regardless
-    of script. A production system would use langdetect + script-aware
-    tokenisers (e.g., Indic NLP library for Hindi morphological analysis).
+    Works for Hindi because Unicode normalisation preserves Devanagari script
+    and BM25 treats each Unicode word as a token regardless of script.
     """
     text = unicodedata.normalize("NFKC", text).lower()
     tokens = re.split(r"[\s\p{P}\p{Z}]+", text) if False else re.split(r"[\s,.!?;:\"'()\[\]{}<>/\\|@#$%^&*+=~`]+", text)

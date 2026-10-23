@@ -1,23 +1,8 @@
 """
-DocMind — Qdrant Vector Store Wrapper
-=======================================
-Thin async wrapper around the Qdrant client that handles:
-  - Collection creation with correct vector config
-  - Upserting points with dense vectors + metadata payload
-  - Dense similarity search with optional metadata filtering
-  - Deleting points by document ID
+Qdrant async client wrapper.
 
-Why Qdrant?
-  Written in Rust → very low CPU and memory overhead compared to Go-based
-  alternatives.  Supports dense + sparse vectors in the same collection,
-  which is exactly what hybrid search needs.  Local file mode means zero
-  Docker needed in development; same client code works against Qdrant Cloud.
-
-Interview talking point:
-  "Qdrant uses HNSW (Hierarchical Navigable Small World) graphs for approximate
-   nearest neighbour search.  HNSW trades a tiny recall penalty for O(log n)
-   search instead of O(n) brute-force.  At 1M vectors the difference is
-   milliseconds vs. minutes."
+Handles collection creation, chunk upsertion, similarity search, and deletion.
+Supports local file mode (no Docker) and remote server mode — same code for both.
 """
 
 from __future__ import annotations

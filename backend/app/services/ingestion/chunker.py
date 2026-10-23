@@ -1,31 +1,9 @@
 """
-DocMind — Text Chunker (Parent-Child Strategy)
-================================================
-Splits extracted text into overlapping child chunks (for embedding precision)
-and larger parent chunks (for LLM context richness).
+Parent-child text chunker.
 
-Why parent-child chunking?
-  Small chunks (512 tokens) → precise embedding — the model can capture the
-  meaning of a focused passage without being diluted by surrounding text.
-
-  But the LLM needs context to answer well.  If the small chunk says
-  "the rate is 12%", the LLM doesn't know what "rate" refers to.
-
-  Solution: index the small chunk, but when it's retrieved, fetch its parent
-  chunk (1536 tokens) to feed to the LLM.  The LLM gets the paragraph context
-  without it polluting the embedding space.
-
-Token counting:
-  We approximate tokens as words/0.75 (1 token ≈ 0.75 words for English).
-  For Hindi/Devanagari, tokens are closer to 1 per character cluster, so
-  we use a conservative 4 chars/token estimate.  Production would use
-  tiktoken or the model's actual tokeniser.
-
-Interview talking point:
-  "The parent-child pattern is a form of the information retrieval principle
-   of 'retrieve small, read large'.  It separates the retrieval index
-   (high-precision, compact) from the reading context (rich, complete).
-   Many production RAG systems at Notion, Cohere, and Anthropic use this."
+Creates overlapping child chunks (512 tokens) for embedding precision and
+larger parent chunks (1536 tokens) for LLM context. Token count is estimated
+at 4 chars/token to avoid loading a full tokeniser.
 """
 
 from __future__ import annotations

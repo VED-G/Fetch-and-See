@@ -1,31 +1,9 @@
 """
-DocMind — Hybrid Search with Reciprocal Rank Fusion (RRF)
-===========================================================
-Combines BM25 sparse retrieval and dense vector retrieval into a single
-ranked list using Reciprocal Rank Fusion.
+Hybrid search using Reciprocal Rank Fusion (RRF) to combine BM25 and vector results.
 
-Why RRF instead of score normalisation?
-  BM25 scores and cosine similarity scores live on completely different
-  mathematical scales.  Score normalisation (e.g., min-max) makes both
-  sit in [0, 1] but doesn't fix the distribution mismatch — a BM25 score
-  of 0.8 and a cosine score of 0.8 mean very different things.
-
-  RRF uses only RANKS (positions in each list), not raw scores.  This
-  makes it robust to any score distribution and requires zero tuning.
-
-  RRF formula:
-      RRF_score(d) = Σ  1 / (k + rank_m(d))
-      over all retrievers m, where k=60 (standard constant)
-
-  Intuition: a document ranked #1 by both BM25 and vector gets
-      1/(60+1) + 1/(60+1) ≈ 0.033, which beats anything ranked lower
-      in either list.
-
-Interview talking point:
-  "RRF is O(n log n) — just sorting two lists and merging.  It's the same
-   algorithm used in multi-stage retrieval systems at places like Google and
-   LinkedIn.  Qdrant also exposes it natively, but I implemented it here so
-   the logic is visible and testable."
+RRF merges ranked lists using only positions, not raw scores, making it
+robust to scale mismatches between BM25 and cosine similarity outputs.
+Formula: score(d) = sum(1 / (k + rank)) over all retrievers, k=60.
 """
 
 from __future__ import annotations

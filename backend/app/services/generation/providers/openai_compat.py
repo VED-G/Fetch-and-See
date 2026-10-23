@@ -1,8 +1,8 @@
 """
-DocMind — OpenAI-Compatible Provider
-=======================================
-Uses the openai SDK with configurable base_url — works with OpenAI, Azure,
-Together.ai, or any OpenAI-compatible endpoint.
+OpenAI-compatible LLM provider.
+
+Works with OpenAI, Azure, Together.ai, or any OpenAI-spec endpoint.
+Configure via OPENAI_API_KEY, OPENAI_BASE_URL, and OPENAI_MODEL in .env.
 """
 
 from __future__ import annotations

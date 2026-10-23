@@ -1,25 +1,8 @@
 """
-DocMind — Groq LLM Provider (Primary)
-=======================================
-Uses the official Groq Python SDK for chat completions.
+Groq LLM provider (primary).
 
-Why Groq?
-  Groq runs LLMs on custom Language Processing Units (LPUs) — dedicated
-  silicon optimised for token generation.  Result: 300-500 tokens/sec vs.
-  10-30 tokens/sec on a laptop CPU.  Free tier is generous (14k RPM on
-  llama-3.1-8b-instant).  Perfect for demos and development.
-
-Streaming:
-  We use Groq's native streaming API.  Each chunk arrives as an SSE event
-  from Groq, and we forward individual tokens to the client as another SSE
-  stream — so the user sees tokens appear in real time.
-
-Interview talking point:
-  "Groq's LPU is a dataflow architecture — it avoids the memory bandwidth
-   bottleneck that limits GPU throughput for autoregressive inference.
-   Every token generation step in an LLM reads the KV-cache from memory;
-   Groq's architecture keeps the KV-cache on-chip.  That's why it's 10-20×
-   faster than a GPU for generation (not training)."
+Uses the official Groq SDK. Returns streaming tokens as they arrive from
+Groq's API, which we forward directly to the client as SSE events.
 """
 
 from __future__ import annotations

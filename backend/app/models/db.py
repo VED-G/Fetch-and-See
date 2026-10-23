@@ -1,21 +1,8 @@
 """
-DocMind — Database Models (SQLAlchemy)
-========================================
-SQLite in development; swap DATABASE_URL to Postgres for production —
-the models are identical either way.
+SQLAlchemy async ORM models.
 
-Tables:
-  documents        — one row per uploaded file
-  chunks           — child chunks (512 tokens) with metadata
-  parent_chunks    — parent chunks (1536 tokens) for LLM context
-  api_keys         — hashed API keys for authentication
-  sessions         — conversation sessions (memory)
-  messages         — individual turns within a session
-
-Interview talking point:
-  "I used async SQLAlchemy with aiosqlite so database I/O doesn't block the
-   FastAPI event loop.  The same async driver pattern works with asyncpg for
-   Postgres — swapping databases is a one-line change in the DATABASE_URL."
+Tables: documents, chunks, parent_chunks, api_keys, sessions, messages, ingestion_jobs.
+Uses SQLite by default; swap DATABASE_URL to Postgres without changing any model code.
 """
 
 from __future__ import annotations

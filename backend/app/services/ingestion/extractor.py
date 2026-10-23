@@ -1,22 +1,10 @@
 """
-DocMind — Document Text Extractor
-====================================
-Extracts clean text from PDF, DOCX, TXT, and Markdown files,
-preserving page numbers and heading structure where available.
+Document text extractor for PDF, DOCX, TXT, and Markdown.
 
-Library choices:
-  PDF:  PyMuPDF (fitz) — fastest Python PDF parser, 3-5× faster than pdfplumber,
-        preserves page numbers natively.
-  DOCX: python-docx — the official library, handles tables and paragraphs.
-  TXT:  chardet for encoding detection (many Indian text files use latin-1 or cp1252).
-  MD:   markdown library → strip HTML tags → plain text.
-
-Interview talking point:
-  "PDF extraction is surprisingly hard.  PDFs store characters as positioned
-   glyphs, not flowing text — so PyMuPDF's get_text('blocks') call groups
-   glyphs into reading-order blocks.  Without this, text from multi-column
-   PDFs comes out scrambled.  I tested with a 2-column research paper and
-   the output was clean."
+PDF uses PyMuPDF (reading-order block extraction).
+DOCX uses python-docx (paragraphs + tables).
+TXT uses chardet for encoding detection.
+MD strips markup and splits on headings.
 """
 
 from __future__ import annotations

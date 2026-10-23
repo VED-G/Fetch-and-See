@@ -1,17 +1,8 @@
 """
-DocMind — Ingestion Pipeline Orchestrator
-==========================================
-Ties together: extract → language detect → chunk → deduplicate → embed → store.
-Called by the Celery task.
+Ingestion pipeline: extract -> detect language -> chunk -> deduplicate -> embed -> store.
 
-The pipeline updates job progress in Redis so the polling endpoint
-(/api/v1/documents/jobs/{job_id}) can show real-time progress to the user.
-
-Interview talking point:
-  "I designed the pipeline as a sequence of pure functions with side effects
-   only at the boundaries (DB writes, Qdrant writes).  This makes each step
-   independently testable — I can unit-test the chunker with fake pages
-   without touching a real database."
+Called by the Celery worker task. Updates job progress at each stage so the
+client can poll /api/v1/documents/jobs/{job_id} for real-time status.
 """
 
 from __future__ import annotations

@@ -1,25 +1,9 @@
 """
-DocMind — FastAPI Application Factory
-=======================================
-We use an 'app factory' pattern: create_app() builds and returns the FastAPI
-instance.  This makes testing easy — tests call create_app() with test
-settings, no global state to clean up.
+FastAPI application factory.
 
-Lifespan (startup/shutdown) handles:
-  - DB table creation
-  - Qdrant collection setup
-  - Embedding model warm-up (loads model weights once, reuses across requests)
-  - Logging configuration
-
-Middleware stack (outermost → innermost):
-  1. RequestIDMiddleware   — injects X-Request-ID into every request/response
-  2. CORSMiddleware        — allows the Streamlit UI to call the API
-  3. Exception handlers    — converts DocMindError → consistent JSON response
-
-Interview talking point:
-  "The lifespan context manager (FastAPI 0.93+) replaces the old on_event
-   startup/shutdown pattern.  It keeps startup and shutdown logic co-located,
-   which is cleaner for resource cleanup (model unloading, DB connection pools)."
+create_app() builds and returns the app instance, making it easy to create
+isolated instances in tests. The lifespan context manager handles startup
+(DB init, Qdrant setup, model warm-up) and shutdown (connection cleanup).
 """
 
 from __future__ import annotations

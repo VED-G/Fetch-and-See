@@ -1,15 +1,8 @@
 """
-DocMind — Pydantic Request/Response Schemas
-=============================================
-These schemas are the public contract of the API.
-They are separate from the DB models (ORM) — that separation means we can
-evolve the database schema without breaking the API shape (and vice versa).
+Pydantic request/response schemas (separate from ORM models).
 
-Interview talking point:
-  "I kept request schemas, response schemas, and DB models in separate layers.
-   This is the 'schema vs model' pattern — common in production FastAPI apps.
-   It prevents accidentally leaking internal fields (like key_hash) in API
-   responses."
+Keeping schemas and DB models in separate layers prevents leaking internal
+fields (e.g. key_hash) in API responses and allows independent evolution.
 """
 
 from __future__ import annotations

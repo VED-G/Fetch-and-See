@@ -1,24 +1,8 @@
 """
-DocMind — Shared API Dependencies
-===================================
-FastAPI dependencies are injectable functions resolved per-request.
-They handle cross-cutting concerns:
-  - Database session management (auto-close after request)
-  - API key authentication
-  - Rate limiting
+Shared FastAPI dependencies (injectable per-request).
 
-Usage in route handlers:
-    @router.post("/upload")
-    async def upload(
-        db: AsyncSession = Depends(get_db),
-        api_key: APIKey = Depends(require_auth),
-    ):
-        ...
-
-Interview talking point:
-  "FastAPI's dependency injection system is composable — you can nest
-   dependencies. require_admin calls require_auth which calls get_db.
-   Each layer of the chain is independently testable."
+Covers: async DB session, API key auth (Bearer token), admin guard,
+and sliding-window rate limiting via Redis sorted sets.
 """
 
 from __future__ import annotations

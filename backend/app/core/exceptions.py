@@ -1,22 +1,9 @@
 """
-DocMind — Custom Exception Hierarchy
-======================================
-All application exceptions inherit from DocMindError.
-FastAPI exception handlers (registered in main.py) convert these into
-consistent JSON responses:
+Application exception hierarchy.
 
-    {
-        "error": "DocumentNotFound",
-        "message": "Document abc123 does not exist",
-        "detail": null,
-        "request_id": "req-xyz"
-    }
-
-Interview talking point:
-  "A shared exception base class means every error the API returns has the
-   same shape — no surprises for API consumers.  Each HTTP status code maps
-   to a specific exception type, so you can grep the codebase for, say,
-   RateLimitExceeded and find every place it's raised."
+All exceptions inherit from DocMindError, which carries an http_status and
+error_code. FastAPI exception handlers in main.py convert these to consistent
+JSON: {error, message, detail, request_id}.
 """
 
 from __future__ import annotations

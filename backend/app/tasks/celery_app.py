@@ -1,23 +1,8 @@
 """
-DocMind — Celery Application
-==============================
-Celery handles async document ingestion so the API doesn't block.
+Celery application for async document ingestion.
 
-Why Celery + Redis?
-  PDF parsing + chunking + embedding a 50-page document takes 30-90 seconds
-  on a low-end CPU.  A synchronous upload endpoint would hold the HTTP
-  connection open that whole time — terrible UX and resource waste.
-
-  With Celery:
-    1. API receives file → saves to disk → dispatches Celery task → returns 202
-    2. Celery worker runs ingestion in background
-    3. Client polls GET /api/v1/documents/jobs/{job_id} to check progress
-
-Interview talking point:
-  "I chose Celery over Python's asyncio.create_task() for ingestion because
-   Celery tasks survive worker restarts (stored in Redis), can be retried
-   automatically on failure, and can be distributed across multiple workers
-   if throughput needs to scale."
+Ingestion tasks are dispatched here so the upload endpoint returns 202 immediately.
+Redis is the broker; tasks survive worker restarts and are retried on failure.
 """
 
 from __future__ import annotations
