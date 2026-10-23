@@ -36,7 +36,8 @@ data/uploads/
 data/qdrant_storage/
 data/bm25_index/
 *.sqlite
-*.db
+docmind.db
+*.db-journal
 
 # ─── Model cache (large files) ────────────────────────────────────────────────
 .cache/

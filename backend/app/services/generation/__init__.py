@@ -1,0 +1,1 @@
+"""DocMind — generation services package."""

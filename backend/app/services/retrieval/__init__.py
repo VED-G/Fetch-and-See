@@ -1,0 +1,1 @@
+"""DocMind — retrieval services package."""

@@ -1,0 +1,1 @@
+"""DocMind — integration tests package."""

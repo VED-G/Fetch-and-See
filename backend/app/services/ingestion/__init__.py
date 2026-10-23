@@ -1,0 +1,1 @@
+"""DocMind — ingestion services package."""

@@ -1,0 +1,1 @@
+"""DocMind — unit tests package."""
