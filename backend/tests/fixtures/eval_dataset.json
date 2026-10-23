@@ -1,0 +1,22 @@
+[
+  {
+    "question": "What is the refund policy for digital products?",
+    "ground_truth": "Digital products are non-refundable once downloaded. A refund may be issued within 24 hours of purchase if the product has not been accessed."
+  },
+  {
+    "question": "How many days does shipping take for standard delivery?",
+    "ground_truth": "Standard delivery takes 5 to 7 business days within the country."
+  },
+  {
+    "question": "What documents are required to open a savings account?",
+    "ground_truth": "To open a savings account, you need a government-issued photo ID, proof of address not older than 3 months, and a minimum deposit of 500 rupees."
+  },
+  {
+    "question": "Is there a penalty for early loan repayment?",
+    "ground_truth": "There is no prepayment penalty for personal loans closed after 12 months. A fee of 2% of the outstanding principal applies if closed before 12 months."
+  },
+  {
+    "question": "What are the accepted payment methods?",
+    "ground_truth": "Accepted payment methods include credit card, debit card, net banking, UPI, and EMI options through partner banks."
+  }
+]
