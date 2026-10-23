@@ -1,16 +1,9 @@
 """
-DocMind — Application Configuration
-====================================
-All configuration is read from environment variables (or a .env file).
-Using Pydantic-Settings means:
-  - Every setting is typed and validated at startup.
-  - Missing required settings fail loudly with a clear error message.
-  - You can override any value with an environment variable.
+Application configuration via Pydantic Settings.
 
-Interview talking point:
-  "Using Pydantic Settings is idiomatic 12-factor app design — config comes
-   from the environment, not hard-coded values, so the same image runs in
-   dev, staging, and prod without rebuilding."
+All settings are read from environment variables or a .env file.
+Every setting is typed and validated at startup — missing required values
+fail loudly. Override any value with an env var without changing code.
 """
 
 from __future__ import annotations
@@ -88,34 +81,13 @@ class Settings(BaseSettings):
     BM25_TOP_K: int = 20
     RRF_K: int = 60                      # Reciprocal Rank Fusion constant
 
-    # ── Confidence Thresholds & "I Don't Know" ────────────────────────────────
-    #
-    # DocMind uses a two-level confidence system:
-    #
-    #   Score range        Behaviour
-    #   ─────────────────────────────────────────────────────────────────────
-    #   score < NO_ANSWER  Skip LLM.  Return structured "I don't know" with
-    #                      the best retrieved chunk shown as evidence (so the
-    #                      user can judge whether the question is simply out
-    #                      of scope vs. a retrieval failure).
-    #
-    #   NO_ANSWER ≤ score  Call LLM but tag the response with
-    #     < LOW_CONF       confidence="low" and a UI warning badge.
-    #                      Still provides the best-effort answer.
-    #
-    #   score ≥ LOW_CONF   Normal confident answer with citations.
-    #
-    # Scores are normalised to [0, 1]:
-    #   - With reranker ON:  reranker logit score after sigmoid
-    #   - With reranker OFF: cosine similarity from Qdrant vector search
-    #
-    # Why two thresholds instead of one hard cutoff?
-    #   A hard cutoff hides potentially useful answers from the user.
-    #   A warning badge lets them decide whether to trust a borderline answer,
-    #   which is better UX and more honest than silently discarding results.
-    #
-    NO_ANSWER_THRESHOLD: float = 0.15    # Below this → skip LLM entirely
-    LOW_CONFIDENCE_THRESHOLD: float = 0.35  # Below this → warn but still answer
+    # Two-level confidence system:
+    #   score < NO_ANSWER             -> skip LLM, return "I don't know"
+    #   NO_ANSWER <= score < LOW_CONF -> answer with low-confidence warning
+    #   score >= LOW_CONF             -> normal confident answer with citations
+    # Scores normalised to [0,1] via reranker sigmoid or Qdrant cosine similarity.
+    NO_ANSWER_THRESHOLD: float = 0.15
+    LOW_CONFIDENCE_THRESHOLD: float = 0.35
 
     @field_validator("NO_ANSWER_THRESHOLD", "LOW_CONFIDENCE_THRESHOLD")
     @classmethod

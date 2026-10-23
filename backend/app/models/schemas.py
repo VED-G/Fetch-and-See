@@ -239,5 +239,37 @@ class TranscriptionResponse(BaseModel):
     duration_seconds: float | None = None
 
 
+# Sessions
+
+class SessionInfo(BaseModel):
+    session_id: str
+    collection_id: str
+    created_at: datetime
+
+
+class SessionHistoryResponse(BaseModel):
+    session_id: str
+    collection_id: str
+    created_at: datetime
+    messages: list[dict]
+
+
+# Search debug
+
+class SearchDebugRequest(BaseModel):
+    query: str = Field(..., min_length=1)
+    collection_id: str = "default"
+    top_k: int | None = None
+
+
+class SearchDebugResponse(BaseModel):
+    query: str
+    bm25_results: list[dict]
+    vector_results: list[dict]
+    hybrid_results: list[dict]
+    reranked_results: list[dict]
+    latency: dict[str, int]
+
+
 # Forward reference resolution
 QueryResponse.model_rebuild()

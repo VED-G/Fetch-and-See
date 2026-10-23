@@ -82,6 +82,22 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
         app.state.reranker = None
         log.info("reranker.disabled", reason="ENABLE_RERANKER=false")
 
+    # 7. Build BM25 index from existing chunks in DB
+    from app.services.retrieval.bm25_index import BM25Index
+    bm25_index = BM25Index()
+    async with async_session_factory() as db:
+        from sqlalchemy import select as sa_select
+        from app.models.db import Chunk as ChunkModel
+        result = await db.execute(sa_select(ChunkModel.id, ChunkModel.text, ChunkModel.document_id))
+        rows = result.all()
+        if rows:
+            bm25_index.add_chunks([
+                {"chunk_id": r.id, "text": r.text, "doc_id": r.document_id}
+                for r in rows
+            ])
+    app.state.bm25_index = bm25_index
+    log.info("bm25.ready", chunks_indexed=len(rows) if rows else 0)
+
     log.info("docmind.ready", host=settings.APP_HOST, port=settings.APP_PORT)
 
     yield  # ← Application runs here
