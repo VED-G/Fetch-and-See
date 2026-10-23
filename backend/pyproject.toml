@@ -1,0 +1,144 @@
+[build-system]
+requires = ["setuptools>=72.0", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "docmind-backend"
+version = "0.1.0"
+description = "Production-style RAG API with hybrid search, reranking, and grounded citations"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "VED-G", email = "vedantgjbe842@gmail.com" }]
+
+dependencies = [
+    # ── Web framework ──────────────────────────────────────────────────────────
+    "fastapi==0.115.4",
+    "uvicorn[standard]==0.32.1",
+    "python-multipart==0.0.17",
+    "sse-starlette==2.1.3",
+
+    # ── Config & Validation ────────────────────────────────────────────────────
+    "pydantic==2.10.2",
+    "pydantic-settings==2.6.1",
+    "python-dotenv==1.0.1",
+
+    # ── Database ───────────────────────────────────────────────────────────────
+    "sqlalchemy==2.0.36",
+    "aiosqlite==0.20.0",
+    "alembic==1.14.0",
+
+    # ── HTTP client ────────────────────────────────────────────────────────────
+    "httpx==0.28.0",
+
+    # ── Async task queue ───────────────────────────────────────────────────────
+    "celery[redis]==5.4.0",
+    "redis==5.2.1",
+
+    # ── Vector database ────────────────────────────────────────────────────────
+    "qdrant-client==1.12.1",
+
+    # ── Embeddings & Reranking ─────────────────────────────────────────────────
+    "sentence-transformers==3.3.1",
+    "torch==2.5.1",                   # CPU-only; GPU users can swap for cuda build
+    "transformers==4.47.0",
+    "FlagEmbedding==1.3.3",           # For bge-reranker-v2-m3 cross-encoder
+
+    # ── Retrieval ──────────────────────────────────────────────────────────────
+    "rank-bm25==0.2.2",
+
+    # ── Document parsing ───────────────────────────────────────────────────────
+    "pymupdf==1.24.14",               # PDF extraction (fitz)
+    "python-docx==1.1.2",             # DOCX extraction
+    "markdown==3.7",                  # MD parsing
+    "chardet==5.2.0",                 # Encoding detection for TXT files
+
+    # ── Language detection ─────────────────────────────────────────────────────
+    "langdetect==1.0.9",
+
+    # ── LLM providers ─────────────────────────────────────────────────────────
+    "groq==0.13.0",                   # Groq cloud (primary)
+    "openai==1.57.0",                 # OpenAI-compatible (optional)
+
+    # ── Security ───────────────────────────────────────────────────────────────
+    "passlib[bcrypt]==1.7.4",
+    "python-jose[cryptography]==3.3.0",
+
+    # ── Observability ──────────────────────────────────────────────────────────
+    "prometheus-client==0.21.1",
+    "structlog==24.4.0",
+
+    # ── Evaluation ────────────────────────────────────────────────────────────
+    "ragas==0.2.6",
+    "datasets==3.2.0",
+
+    # ── Benchmarks ────────────────────────────────────────────────────────────
+    "locust==2.32.3",
+    "matplotlib==3.9.3",
+    "pandas==2.2.3",
+    "numpy==2.0.2",
+]
+
+[project.optional-dependencies]
+voice = [
+    "openai-whisper==20240930",
+    "ffmpeg-python==0.2.0",
+]
+dev = [
+    "ruff==0.8.2",
+    "pyright==1.1.390",
+    "pytest==8.3.4",
+    "pytest-asyncio==0.24.0",
+    "pytest-cov==6.0.0",
+    "respx==0.21.1",               # Mock httpx for testing LLM providers
+    "faker==33.1.0",               # Test data generation
+]
+
+# ─── Ruff (Linter + Formatter) ─────────────────────────────────────────────────
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+src = ["app"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # bugbear
+    "C4",  # comprehensions
+    "UP",  # pyupgrade
+    "ARG", # unused arguments
+    "SIM", # simplify
+    "TCH", # type-checking imports
+]
+ignore = [
+    "B008",  # FastAPI depends() pattern
+    "B904",  # raise from in except
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+# ─── Pyright (Type Checker) ────────────────────────────────────────────────────
+[tool.pyright]
+pythonVersion = "3.11"
+typeCheckingMode = "basic"
+reportMissingImports = true
+reportMissingTypeStubs = false    # Many ML libs lack stubs
+
+# ─── Pytest ────────────────────────────────────────────────────────────────────
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "--cov=app --cov-report=term-missing --cov-report=xml -v"
+
+[tool.coverage.run]
+source = ["app"]
+omit = ["tests/*", "scripts/*"]
