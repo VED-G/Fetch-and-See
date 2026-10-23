@@ -1,4 +1,4 @@
-"""
+﻿"""
 Query latency benchmark.
 
 Sends N queries through the full RAG pipeline (no streaming, direct service
@@ -134,7 +134,7 @@ async def run_bench(n_queries: int, use_rerank: bool) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="DocMind query latency benchmark")
+    parser = argparse.ArgumentParser(description="Fetch and See query latency benchmark")
     parser.add_argument("--queries", type=int, default=50, help="Number of queries to run")
     parser.add_argument("--no-rerank", action="store_true", help="Skip reranker")
     args = parser.parse_args()

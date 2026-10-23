@@ -1,4 +1,4 @@
-"""
+﻿"""
 Chat page — streaming Q&A with citations.
 """
 
@@ -8,7 +8,7 @@ import time
 import requests
 import streamlit as st
 
-st.set_page_config(page_title="Chat · DocMind", page_icon="💬", layout="wide")
+st.set_page_config(page_title="Chat · Fetch and See", page_icon="💬", layout="wide")
 
 # Pull shared config from session state (set in app.py sidebar)
 API_URL    = st.session_state.get("api_url", "http://localhost:8000")

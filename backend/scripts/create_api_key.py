@@ -1,4 +1,4 @@
-"""
+﻿"""
 Bootstrap script: create an admin API key for first-time setup.
 
 Usage:
@@ -54,7 +54,7 @@ async def create_key(name: str, is_admin: bool) -> str:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Create a DocMind API key")
+    parser = argparse.ArgumentParser(description="Create a Fetch and See API key")
     parser.add_argument("--name", default="default", help="Label for this key")
     parser.add_argument("--admin", action="store_true", help="Grant admin privileges")
     args = parser.parse_args()

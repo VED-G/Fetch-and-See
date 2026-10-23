@@ -1,4 +1,4 @@
-"""
+﻿"""
 DocMind — /metrics Endpoint (Prometheus format)
 =================================================
 Exposes application metrics in the Prometheus text format.
@@ -8,7 +8,7 @@ Metrics exposed:
   docmind_requests_total{method, endpoint, status}   — request count
   docmind_request_duration_seconds{endpoint}         — latency histogram
   docmind_documents_total                            — total documents ingested
-  docmind_chunks_total                               — total chunks indexed
+  fas_chunks_total                               — total chunks indexed
   docmind_cache_hits_total                           — semantic cache hits
   docmind_cache_misses_total                         — semantic cache misses
   docmind_llm_tokens_total{provider}                 — tokens generated
@@ -36,52 +36,52 @@ router = APIRouter()
 # These are module-level singletons — defined once, incremented anywhere.
 
 REQUEST_COUNT = Counter(
-    "docmind_requests_total",
+    "fas_requests_total",
     "Total HTTP requests",
     ["method", "endpoint", "status_code"],
 )
 
 REQUEST_DURATION = Histogram(
-    "docmind_request_duration_seconds",
+    "fas_request_duration_seconds",
     "HTTP request duration in seconds",
     ["endpoint"],
     buckets=[0.01, 0.05, 0.1, 0.25, 0.5, 1.0, 2.5, 5.0, 10.0],
 )
 
 DOCUMENTS_INGESTED = Counter(
-    "docmind_documents_total",
+    "fas_documents_total",
     "Total documents successfully ingested",
 )
 
 CHUNKS_INDEXED = Counter(
-    "docmind_chunks_total",
+    "fas_chunks_total",
     "Total chunks indexed into the vector store",
 )
 
 CACHE_HITS = Counter(
-    "docmind_cache_hits_total",
+    "fas_cache_hits_total",
     "Semantic cache hits (query answered from cache)",
 )
 
 CACHE_MISSES = Counter(
-    "docmind_cache_misses_total",
+    "fas_cache_misses_total",
     "Semantic cache misses (query required retrieval + LLM)",
 )
 
 LLM_TOKENS = Counter(
-    "docmind_llm_tokens_total",
+    "fas_llm_tokens_total",
     "Total LLM output tokens generated",
     ["provider"],
 )
 
 RETRIEVAL_DURATION = Histogram(
-    "docmind_retrieval_duration_seconds",
+    "fas_retrieval_duration_seconds",
     "Retrieval pipeline duration (BM25 + vector + rerank)",
     buckets=[0.01, 0.05, 0.1, 0.25, 0.5, 1.0, 2.5],
 )
 
 GENERATION_DURATION = Histogram(
-    "docmind_generation_duration_seconds",
+    "fas_generation_duration_seconds",
     "LLM generation duration",
     ["provider"],
     buckets=[0.1, 0.5, 1.0, 2.5, 5.0, 10.0, 30.0],

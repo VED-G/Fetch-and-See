@@ -1,1 +1,1 @@
-"""DocMind — retrieval services package."""
+﻿"""Fetch and See — retrieval services package."""

@@ -1,4 +1,4 @@
-"""
+﻿"""
 RAGAS evaluation script.
 
 Measures RAG quality across four dimensions on a ground-truth QA dataset:
@@ -203,7 +203,7 @@ async def run_eval(dataset_path: Path, mode: RetrievalMode, output_path: Path | 
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="RAGAS evaluation for DocMind")
+    parser = argparse.ArgumentParser(description="Fetch and See")
     parser.add_argument(
         "--dataset",
         type=Path,

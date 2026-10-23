@@ -1,4 +1,4 @@
-"""
+﻿"""
 FastAPI application factory.
 
 create_app() builds and returns the app instance, making it easy to create
@@ -39,7 +39,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
         log_level="DEBUG" if settings.APP_DEBUG else "INFO",
         json_logs=settings.is_production,
     )
-    log.info("docmind.starting", env=settings.APP_ENV, provider=settings.LLM_PROVIDER)
+    log.info("fas.starting", env=settings.APP_ENV, provider=settings.LLM_PROVIDER)
 
     # 2. Create database tables (idempotent)
     engine = create_async_engine(settings.DATABASE_URL, echo=settings.APP_DEBUG)
@@ -98,21 +98,21 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     app.state.bm25_index = bm25_index
     log.info("bm25.ready", chunks_indexed=len(rows) if rows else 0)
 
-    log.info("docmind.ready", host=settings.APP_HOST, port=settings.APP_PORT)
+    log.info("fas.ready", host=settings.APP_HOST, port=settings.APP_PORT)
 
     yield  # ← Application runs here
 
     # ── Shutdown ──────────────────────────────────────────────────────────────
-    log.info("docmind.shutting_down")
+    log.info("fas.shutting_down")
     await engine.dispose()
-    log.info("docmind.stopped")
+    log.info("fas.stopped")
 
 
 # ─── App Factory ──────────────────────────────────────────────────────────────
 
 def create_app() -> FastAPI:
     app = FastAPI(
-        title="DocMind API",
+        title="Fetch and See API",
         description=(
             "Production-style RAG API: upload documents, ask questions, "
             "get grounded answers with citations."
@@ -156,7 +156,7 @@ def create_app() -> FastAPI:
 
     # ── Exception Handlers ────────────────────────────────────────────────────
     @app.exception_handler(DocMindError)
-    async def docmind_error_handler(request: Request, exc: DocMindError) -> JSONResponse:
+    async def fas_error_handler(request: Request, exc: DocMindError) -> JSONResponse:
         request_id = request.headers.get("X-Request-ID", "unknown")
         headers = {}
         if isinstance(exc, RateLimitExceeded):

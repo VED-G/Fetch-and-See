@@ -1,4 +1,4 @@
-# DocMind — Architecture
+﻿# Fetch and See — Architecture
 
 This document explains the system design decisions and data flow. Read alongside `DESIGN.md` for the full rationale.
 

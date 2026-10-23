@@ -1,5 +1,5 @@
-"""
-DocMind — Celery Ingestion Task
+﻿"""
+Fetch and See — Celery Ingestion Task
 ==================================
 The async task dispatched when a document is uploaded.
 Runs in a Celery worker process, separate from the FastAPI server.

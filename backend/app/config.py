@@ -1,4 +1,4 @@
-"""
+﻿"""
 Application configuration via Pydantic Settings.
 
 All settings are read from environment variables or a .env file.
@@ -101,7 +101,7 @@ class Settings(BaseSettings):
     QDRANT_LOCAL_PATH: str = "./data/qdrant_storage"
     QDRANT_URL: str = "http://localhost:6333"
     QDRANT_API_KEY: str = ""
-    QDRANT_COLLECTION: str = "docmind_chunks"
+    QDRANT_COLLECTION: str = "fas_chunks"
 
     # ── Redis ─────────────────────────────────────────────────────────────────
     REDIS_URL: str = "redis://localhost:6379/0"
@@ -139,7 +139,7 @@ class Settings(BaseSettings):
         return self.MAX_UPLOAD_SIZE_MB * 1024 * 1024
 
     # ── Database ──────────────────────────────────────────────────────────────
-    DATABASE_URL: str = "sqlite+aiosqlite:///./data/docmind.sqlite"
+    DATABASE_URL: str = "sqlite+aiosqlite:///./data/fetch_and_see.sqlite"
 
     # ── Data directories ──────────────────────────────────────────────────────
     @property

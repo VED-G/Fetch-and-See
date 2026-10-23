@@ -1,9 +1,9 @@
-[build-system]
+﻿[build-system]
 requires = ["setuptools>=72.0", "wheel"]
 build-backend = "setuptools.backends.legacy:build"
 
 [project]
-name = "docmind-backend"
+name = "fetch-and-see-backend"
 version = "0.1.0"
 description = "Production-style RAG API with hybrid search, reranking, and grounded citations"
 readme = "README.md"

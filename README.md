@@ -1,4 +1,4 @@
-# DocMind
+﻿# Fetch and See
 
 A production-style RAG (Retrieval-Augmented Generation) API. Upload PDFs, DOCX, TXT, or Markdown files and ask questions — you get grounded answers with inline citations and page numbers, a per-query latency breakdown, and a confidence score.
 
@@ -26,8 +26,8 @@ A production-style RAG (Retrieval-Augmented Generation) API. Upload PDFs, DOCX, 
 ### 1. Clone and set up
 
 ```bash
-git clone https://github.com/VED-G/docmind.git
-cd docmind
+git clone https://github.com/VED-G/Fetch-and-See.git
+cd Fetch-and-See
 ```
 
 ### 2. Create .env

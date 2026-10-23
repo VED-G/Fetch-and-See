@@ -1,1 +1,1 @@
-"""DocMind — LLM providers package."""
+﻿"""Fetch and See — LLM providers package."""

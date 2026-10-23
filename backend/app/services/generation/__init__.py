@@ -1,1 +1,1 @@
-"""DocMind — generation services package."""
+﻿"""Fetch and See — generation services package."""

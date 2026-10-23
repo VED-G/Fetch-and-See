@@ -1,1 +1,1 @@
-"""DocMind — integration tests package."""
+﻿"""Fetch and See — integration tests package."""

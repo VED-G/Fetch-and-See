@@ -1,5 +1,5 @@
-"""
-DocMind — Test Fixtures (conftest.py)
+﻿"""
+Fetch and See — Test Fixtures (conftest.py)
 =======================================
 Shared pytest fixtures used by both unit and integration tests.
 

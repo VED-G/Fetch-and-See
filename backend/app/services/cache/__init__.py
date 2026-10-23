@@ -1,1 +1,1 @@
-"""DocMind — cache services package."""
+﻿"""Fetch and See — cache services package."""

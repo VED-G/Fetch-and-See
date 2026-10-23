@@ -1,11 +1,11 @@
-"""
+﻿"""
 Debug page — raw retrieval scores without LLM, per-stage latency breakdown.
 """
 
 import requests
 import streamlit as st
 
-st.set_page_config(page_title="Debug · DocMind", page_icon="🔬", layout="wide")
+st.set_page_config(page_title="Debug · Fetch and See", page_icon="🔬", layout="wide")
 
 API_URL    = st.session_state.get("api_url", "http://localhost:8000")
 API_KEY    = st.session_state.get("api_key", "")

@@ -1,4 +1,4 @@
-"""
+﻿"""
 DocMind Streamlit frontend — entry point.
 
 Multi-page app:
@@ -14,7 +14,7 @@ Run:
 import streamlit as st
 
 st.set_page_config(
-    page_title="DocMind",
+    page_title="Fetch and See",
     page_icon="🧠",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -123,7 +123,7 @@ input, textarea, [data-baseweb="input"] {
 # ── Sidebar: shared config ──────────────────────────────────────────────────
 
 with st.sidebar:
-    st.markdown("## 🧠 DocMind")
+    st.markdown("## 🧠 Fetch and See")
     st.caption("RAG with citations")
     st.divider()
 
@@ -166,7 +166,7 @@ with st.sidebar:
 
 # ── Home page ───────────────────────────────────────────────────────────────
 
-st.markdown("## Welcome to DocMind 🧠")
+st.markdown("## Welcome to Fetch and See 🔍")
 st.markdown(
     "A production-style RAG system — upload documents and ask questions, "
     "with grounded answers and inline citations.\n\n"

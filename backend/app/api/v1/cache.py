@@ -1,4 +1,4 @@
-"""DocMind — Cache management endpoints."""
+﻿"""Fetch and See — cache management endpoints."""
 from fastapi import APIRouter, Depends
 from app.api.deps import require_admin
 from app.models.db import APIKey

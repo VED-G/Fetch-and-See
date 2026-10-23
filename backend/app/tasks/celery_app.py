@@ -1,4 +1,4 @@
-"""
+﻿"""
 Celery application for async document ingestion.
 
 Ingestion tasks are dispatched here so the upload endpoint returns 202 immediately.
@@ -14,7 +14,7 @@ from app.config import get_settings
 settings = get_settings()
 
 celery_app = Celery(
-    "docmind",
+    "fetch-and-see",
     broker=settings.CELERY_BROKER_URL,
     backend=settings.CELERY_RESULT_BACKEND,
     include=["app.tasks.ingestion_tasks"],

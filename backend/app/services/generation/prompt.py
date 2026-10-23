@@ -1,4 +1,4 @@
-"""
+﻿"""
 Citation-aware prompt builder.
 
 Wraps retrieved chunks in [SOURCE N] tags and instructs the LLM to cite
@@ -9,7 +9,7 @@ providing a second layer of hallucination defence after the confidence gate.
 from __future__ import annotations
 
 SYSTEM_PROMPT = """\
-You are DocMind, a precise document assistant. Your ONLY job is to answer the user's
+You are Fetch and See, a precise document assistant. Your ONLY job is to answer the user's
 question based STRICTLY on the provided source passages below.
 
 RULES (follow exactly):
